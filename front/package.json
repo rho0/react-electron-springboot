@@ -1,0 +1,66 @@
+{
+  "name": "chat-rho-test",
+  "version": "0.1.0",
+  "private": true,
+  "main": "public/main.mjs",
+  "type": "module",
+  "homepage": "./",
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.20",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "axios": "^1.7.2",
+    "electron-is-dev": "^3.0.1",
+    "node-fetch": "^2.7.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
+  },
+  "proxy": "http://localhost:8080",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron": "wait-on http://localhost:3000 && electron public/main.mjs",
+    "compile-main": "tsc ./src/main/main.ts --outdir ./compile-main && tsc ./src/main/preload.ts --outdir ./compile-main",
+    "dev": "concurrently \"yarn start\" \"yarn electron\"",
+    "electron-pack": "yarn build && electron-builder build -c.extraMetadata.main=build/main.mjs",
+    "package": "electron-packager . YourAppName --platform=win32 --arch=x64 --icon=public/icon.ico"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^31.0.1",
+    "electron-builder": "^24.13.3",
+    "http-proxy-middleware": "^3.0.0",
+    "wait-on": "^7.2.0"
+  }
+}
