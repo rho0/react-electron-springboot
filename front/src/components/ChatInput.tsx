@@ -1,41 +1,71 @@
+// import React, { useState } from 'react';
+// import { TextField, Button, Container } from '@mui/material';
+//
+// interface ChatInputProps {
+//     onSendMessage: (message: { user: string, text: string }) => void;
+// }
+//
+// const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
+//     const [text, setText] = useState('');
+//     const [user, setUser] = useState('');
+//
+//     const handleSend = () => {
+//         if (text.trim() && user.trim()) {
+//             onSendMessage({ user, text });
+//             setText('');
+//         }
+//     };
+//
+//     return (
+//         <Container>
+//             <TextField
+//                 label="User"
+//                 value={user}
+//                 onChange={(e) => setUser(e.target.value)}
+//                 fullWidth
+//                 margin="normal"
+//             />
+//             <TextField
+//                 label="Message"
+//                 value={text}
+//                 onChange={(e) => setText(e.target.value)}
+//                 fullWidth
+//                 margin="normal"
+//             />
+//             <Button variant="contained" color="primary" onClick={handleSend}>
+//                 Send
+//             </Button>
+//         </Container>
+//     );
+// };
+//
+// export default ChatInput;
+
 import React, { useState } from 'react';
-import { TextField, Button, Container } from '@mui/material';
 
 interface ChatInputProps {
-    onSendMessage: (message: { user: string, text: string }) => void;
+    onSendMessage: (message: string) => void;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
-    const [text, setText] = useState('');
-    const [user, setUser] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleSend = () => {
-        if (text.trim() && user.trim()) {
-            onSendMessage({ user, text });
-            setText('');
+        if (message.trim()) {
+            onSendMessage(message);
+            setMessage('');
         }
     };
 
     return (
-        <Container>
-            <TextField
-                label="User"
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
-                fullWidth
-                margin="normal"
+        <div>
+            <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
             />
-            <TextField
-                label="Message"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                fullWidth
-                margin="normal"
-            />
-            <Button variant="contained" color="primary" onClick={handleSend}>
-                Send
-            </Button>
-        </Container>
+            <button onClick={handleSend}>Send</button>
+        </div>
     );
 };
 

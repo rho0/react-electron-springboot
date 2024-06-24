@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+
+.chat-box {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  max-height: 300px;
+  overflow-y: scroll;
+  margin-bottom: 1rem;
+}
+
+.chat-message {
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 0.5rem;
+  background-color: #f1f1f1;
+}
+
+.chat-message.self {
+  background-color: #d1ffd1;
+  align-self: flex-end;
+}

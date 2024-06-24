@@ -13,22 +13,18 @@ const Chat: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
 
     const axiosTest = async () => {
-        await http.get('/index')
+        await http.get('/test')
             .then((res) => {
                 console.log(res);
             }).catch((err) => {
-                console.error(err);
+                console.log(err);
         });
     }
 
     const handleSendMessage = (message: Message) => {
-
+        axiosTest();
         setMessages([...messages, message]);
     };
-
-    useEffect(() => {
-        axiosTest();
-    })
 
 
     return (
@@ -39,7 +35,7 @@ const Chat: React.FC = () => {
                     <Message key={index} user={message.user} text={message.text} />
                 ))}
             </List>
-            <ChatInput onSendMessage={handleSendMessage} />
+            {/*<ChatInput onSendMessage={handleSendMessage} />*/}
         </Container>
     );
 };
@@ -47,51 +43,57 @@ const Chat: React.FC = () => {
 export default Chat;
 
 
-// import React, { useState, useEffect, useRef } from 'react';
-// import { Container, Typography, List } from '@mui/material';
+// import React, { useEffect, useState } from 'react';
+// import io from 'socket.io-client';
 // import ChatInput from './ChatInput';
-// import Message from './Message';
+// import ChatMessage from './ChatMessage';
+//
+// const socket = io('http://localhost:4000');
 //
 // interface Message {
-//     user: string;
-//     text: string;
+//     id: string;
+//     message: string;
 // }
 //
 // const Chat: React.FC = () => {
 //     const [messages, setMessages] = useState<Message[]>([]);
-//     const ws = useRef<WebSocket | null>(null);
+//     const [socketId, setSocketId] = useState<string>('');
 //
 //     useEffect(() => {
-//         ws.current = new WebSocket('ws://localhost:8080');
+//         socket.on('connect', () => {
+//             setSocketId(socket.id);
+//         });
 //
-//         ws.current.onmessage = (event) => {
-//             const message: Message = JSON.parse(event.data);
-//             setMessages(prevMessages => [...prevMessages, message]);
-//         };
+//         socket.on('message', (data: Message) => {
+//             setMessages((prevMessages) => [...prevMessages, data]);
+//         });
 //
 //         return () => {
-//             if (ws.current) {
-//                 ws.current.close();
-//             }
+//             socket.off('connect');
+//             socket.off('message');
 //         };
 //     }, []);
 //
-//     const handleSendMessage = (message: Message) => {
-//         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-//             ws.current.send(JSON.stringify(message));
+//     const sendMessage = (message: string) => {
+//         if (message.trim()) {
+//             socket.emit('message', message);
 //         }
 //     };
 //
 //     return (
-//         <Container>
-//             <Typography variant="h4" gutterBottom>Chat Room</Typography>
-//             <List>
-//                 {messages.map((message, index) => (
-//                     <Message key={index} user={message.user} text={message.text} />
+//         <div>
+//             <h1>Socket.io Chat</h1>
+//             <div className="chat-box">
+//                 {messages.map((msg, index) => (
+//                     <ChatMessage
+//                         key={index}
+//                         message={msg}
+//                         isOwnMessage={msg.id === socketId}
+//                     />
 //                 ))}
-//             </List>
-//             <ChatInput onSendMessage={handleSendMessage} />
-//         </Container>
+//             </div>
+//             <ChatInput onSendMessage={sendMessage} />
+//         </div>
 //     );
 // };
 //
