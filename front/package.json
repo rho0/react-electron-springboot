@@ -16,6 +16,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@types/socket.io-client": "^3.0.0",
     "axios": "^1.7.2",
     "electron-is-dev": "^3.0.1",
     "node-fetch": "^2.7.0",
@@ -26,16 +27,15 @@
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
-  "proxy": "http://localhost:8080",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "cross-env HOST=localhost react-scripts start",
+    "build": "cross-env HOST=localhost react-scripts build",
+    "test": "cross-env HOST=localhost react-scripts test",
+    "eject": "cross-env HOST=localhost react-scripts eject",
     "electron": "wait-on http://localhost:3000 && electron public/main.mjs",
     "compile-main": "tsc ./src/main/main.ts --outdir ./compile-main && tsc ./src/main/preload.ts --outdir ./compile-main",
     "dev": "concurrently \"yarn start\" \"yarn electron\"",
-    "electron-pack": "yarn build && electron-builder build -c.extraMetadata.main=build/main.mjs",
+    "electron-pack": "cross-env HOST=localhost yarn build && electron-builder build -c.extraMetadata.main=build/main.mjs",
     "package": "electron-packager . YourAppName --platform=win32 --arch=x64 --icon=public/icon.ico"
   },
   "eslintConfig": {
@@ -61,6 +61,7 @@
     "cross-env": "^7.0.3",
     "electron": "^31.0.1",
     "electron-builder": "^24.13.3",
+    "electron-packager": "^17.1.2",
     "http-proxy-middleware": "^3.0.0",
     "wait-on": "^7.2.0"
   }

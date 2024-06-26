@@ -22,7 +22,7 @@ const Chat: React.FC = () => {
     }
 
     const handleSendMessage = (message: Message) => {
-        axiosTest();
+        // axiosTest();
         setMessages([...messages, message]);
     };
 
